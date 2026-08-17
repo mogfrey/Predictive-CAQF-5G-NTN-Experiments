@@ -1,23 +1,40 @@
-You are taking over the Predictive CA-QF 5G NTN experiment directly on the RAN host.
+You are taking over the Predictive CA-QF 5G NTN experiment directly on the RAN host with full engineering autonomy.
 
-Clone or open:
+Canonical public repository:
 https://github.com/mogfrey/Predictive-CAQF-5G-NTN-Experiments
 
-Your authoritative files are:
+If it is not already present, clone it yourself. If present, inspect it and fast-forward safely. Do not ask the operator to perform clone/setup/configuration steps that you can do directly.
+
+Before making laboratory changes, read these files completely:
 1. docs/SCIENTIFIC_CONTRACT.md
 2. docs/CODEX_MISSION.md
 3. docs/CODEX_EXECUTION_HANDOFF.md
 4. docs/EXPERIMENT_OPERATOR_GUIDE.md
-5. config/campaign.yaml
+5. docs/OPERATIONS_AND_DRIVE.md
+6. config/campaign.yaml
 
-Read them completely before making changes.
+The scientific objective and 55-run campaign are frozen. You have broad engineering autonomy, including modifying this public framework and the dedicated CA-QF OAI checkout, but you must not silently change the scientific contract.
 
-The scientific objective and 55-run campaign are frozen. You have broad engineering autonomy but must not silently change the scientific contract.
+A previous TLE-driven OAI NTN experiment was completed on this research host. Discover and reuse its latest validated TLE/RFsim/OAI engineering where possible. Preserve the completed prior-study environment and create a separate CA-QF OAI study checkout.
 
-A previous TLE-driven OAI NTN experiment was completed in this research program. Reuse its validated TLE/RFsim/OAI engineering where possible, but preserve the completed prior environment and create a separate CA-QF OAI study checkout.
+The operator wants a hands-off run. You must perform the RAN-host setup yourself. Do not stop merely to ask the operator to run ordinary shell commands.
 
-First task: preserve/discover the current laboratory state, identify the latest validated previous TLE/OAI integration, create the separate CA-QF study checkout, fill config/testbed.local.yaml, and pass preflight. Do not start batch experiments yet.
+MANDATORY OPERATIONS LAYER BEFORE PUBLISHABLE RUNS:
+- install a live runtime workspace under $HOME/codex-caqf using scripts/install_ops.sh or an improved equivalent;
+- create/start an HTML progress dashboard and expose its URL/address to the operator;
+- the dashboard MUST visibly show watchdog health as well as campaign/RAN/telemetry/Drive health;
+- create/start an independent watchdog that detects controller death/stall and engineering/instrumentation failures;
+- implement bounded automatic Codex recovery for engineering faults, preserving all failed runs and scientific invariants;
+- first verify the locally installed Codex CLI syntax and write the tested headless recovery command to $HOME/codex-caqf/state/codex_recovery_command.txt; do not guess CLI flags;
+- test watchdog detection/recovery using a harmless synthetic fault before final runs;
+- discover the prior authenticated rclone remote `gdrive`, perform upload/read-back validation, and use a new Drive root `gdrive:PREDICTIVE_CAQF_ANALYSIS_HANDOFF`;
+- publish sanitized status incrementally after each completed/classified run and publish phase bundles with READY markers uploaded last;
+- Drive/reporting failure must not cause an otherwise valid experiment to be rerun.
 
-Build an unattended Linux/tmux runner before final campaign execution so Codex is not consumed while runs are simply waiting.
+First laboratory task: preserve/discover the current host state, locate the latest validated prior TLE/OAI integration, create the separate CA-QF OAI checkout, configure the framework, install/validate dashboard + watchdog + Drive handoff, and pass the engineering gates. Do not start publishable batch experiments until every applicable freeze/start gate passes.
 
-Never expose or commit private UE subscriber credentials.
+Use Linux/tmux/shell supervision for long waits so Codex is not consumed while runs are simply executing. On recoverable faults, let the watchdog launch a fresh narrowly scoped Codex repair session rather than leaving a Codex session waiting continuously.
+
+Never expose or commit private UE subscriber credentials, rclone OAuth configuration, passwords, tokens, private keys, or unsanitized sensitive logs.
+
+When all gates are satisfied, run the campaign autonomously, QC incrementally, package final results, upload the final Drive package and FINAL_READY marker, and leave a concise completion report with exact result/package locations.
