@@ -1,0 +1,1 @@
+run_id,condition_id,pass_id,constellation,repetition,t_s,utc,elevation_deg,slant_range_m,range_rate_mps,geometric_delay_ms,doppler_hz,bler,dtx_count,harq_retx_count,mcs,sinr_db,ul_failure_flag,out_of_sync_flag,goodput_mbps,loss_fraction,rtt_ms,qos_feasible,event_qos_termination,event_radio_failure

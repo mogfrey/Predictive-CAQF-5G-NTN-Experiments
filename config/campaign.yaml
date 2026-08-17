@@ -1,0 +1,103 @@
+study_id: predictive_caqf_5g_ntn_v1
+schema_version: 1
+repetitions: 5
+run_statistical_unit: run
+
+scientific:
+  t_req_s: [15, 30, 60]
+  primary_continue_probability: 0.90
+  probability_sensitivity: [0.80, 0.90, 0.95]
+  primary_probability_status: provisional_until_final_freeze
+  qos_persistence_windows: 2
+  decision_interval_s: 1
+  no_future_heldout_telemetry: true
+  whole_pass_holdout: true
+  failed_runs_retained: true
+
+traffic:
+  protocol: udp
+  tool: iperf3
+  direction: uplink
+  measurement_interval_s: 1
+  feasible_rate_mbps: null
+  overload_rate_mbps: null
+  rate_freeze_rule: >-
+    Choose feasible and overload rates during engineering calibration, before final
+    confirmatory runs. Freeze and hash the values. Do not retune after inspecting
+    confirmatory outcomes.
+  qos:
+    goodput_fraction_min: 0.95
+    loss_fraction_max: 0.01
+    rtt_ms_max: null
+    rtt_status: collect_and_freeze_if_used
+
+controlled_conditions:
+  - id: C-GEO-FEASIBLE
+    profile: geo
+    load_class: feasible
+    purpose: stable_FQ1_FC1_reference
+  - id: C-GEO-OVERLOAD
+    profile: geo
+    load_class: overload
+    purpose: transport_infeasibility_without_continuity_failure
+  - id: C-STATIC-LEO-FEASIBLE
+    profile: static_leo
+    load_class: feasible
+    purpose: leo_geometry_without_orbital_evolution
+  - id: C-NATIVE-LEO-FEASIBLE
+    profile: native_leo
+    load_class: feasible
+    purpose: continuity_driven_failure_reference
+  - id: C-NATIVE-LEO-OVERLOAD
+    profile: native_leo
+    load_class: overload
+    purpose: transport_infeasibility_under_dynamic_ntn
+
+tle_campaign:
+  elevation_mask_deg: 10
+  initial_search_horizon_h: 48
+  selection_rule: first_chronological_pass_matching_band
+  bands:
+    high:
+      max_elevation_deg_min: 75
+      max_elevation_deg_max: 90
+    medium:
+      max_elevation_deg_min: 40
+      max_elevation_deg_max: 60
+    low:
+      max_elevation_deg_min: 20
+      max_elevation_deg_max: 30
+  constellations:
+    - name: starlink
+      ids: [T-S-HIGH, T-S-MEDIUM, T-S-LOW]
+    - name: oneweb
+      ids: [T-O-HIGH, T-O-MEDIUM, T-O-LOW]
+
+predictors:
+  - id: reactive_qos
+    feature_family: current_qos_only
+    operational: true
+  - id: orbit_only
+    feature_family: orbital
+    operational: true
+  - id: radio_qos_only
+    feature_family: radio_qos
+    operational: true
+  - id: fused_caqf
+    feature_family: orbital_radio_qos
+    operational: true
+  - id: oracle
+    feature_family: complete_outcome
+    operational: false
+
+validation:
+  primary: leave_one_pass_out
+  constellation_transfer:
+    - train: starlink
+      test: oneweb
+    - train: oneweb
+      test: starlink
+  group_key: pass_id
+  forbid_group_overlap: true
+
+final_zip_prefix: PREDICTIVE_CAQF_5G_NTN_FINAL_RESULTS

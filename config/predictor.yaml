@@ -1,0 +1,33 @@
+snapshot_interval_s: 1
+history_windows_s: [5, 15, 30]
+
+feature_families:
+  orbital:
+    - elevation_deg
+    - slant_range_m
+    - range_rate_mps
+    - geometric_delay_ms
+    - doppler_hz
+  radio:
+    - bler
+    - dtx_count
+    - harq_retx_count
+    - mcs
+    - sinr_db
+    - ul_failure_flag
+    - out_of_sync_flag
+  qos:
+    - goodput_mbps
+    - loss_fraction
+    - rtt_ms
+
+reference_model:
+  type: horizon_logistic
+  regularization_C: 1.0
+  class_weight: balanced
+  max_iter: 2000
+  note: >-
+    This is a reproducible reference implementation, not the scientific novelty.
+    Codex may replace it with a better calibrated causal survival/viability model
+    if the split, information boundary, baselines, and frozen scientific contract
+    remain unchanged and the change is documented before final evaluation.

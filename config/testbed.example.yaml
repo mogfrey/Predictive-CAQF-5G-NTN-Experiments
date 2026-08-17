@@ -1,0 +1,43 @@
+# Copy to config/testbed.local.yaml and fill on the RAN host. Never commit secrets.
+paths:
+  experiment_root: /home/ran/Predictive-CAQF-5G-NTN-Experiments
+  oai_root: null
+  previous_validated_ntn_oai_root: null
+  historical_paper3_oai_root: null
+
+network:
+  ue_tunnel: null
+  ue_ip_expected: null
+  iperf_server_ip: null
+  iperf_server_port: 5201
+
+observer:
+  latitude_deg: null
+  longitude_deg: null
+  altitude_m: null
+
+radio:
+  nr_carrier_hz: null
+  feeder_carrier_hz: null
+
+commands:
+  core_start: null
+  core_status: null
+  gnb_terrestrial: null
+  gnb_geo: null
+  gnb_static_leo: null
+  gnb_native_leo: null
+  gnb_tle: null
+  ue_terrestrial: null
+  ue_ntn: null
+  stop_ran: null
+
+files:
+  gnb_config_terrestrial: null
+  gnb_config_geo: null
+  gnb_config_static_leo: null
+  gnb_config_native_leo: null
+  ue_config_private: null
+
+security:
+  private_subscriber_config_location: null
