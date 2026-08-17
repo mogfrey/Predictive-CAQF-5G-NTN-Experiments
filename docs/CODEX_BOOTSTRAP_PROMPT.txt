@@ -21,7 +21,8 @@ The operator wants a hands-off run. You must perform the RAN-host setup yourself
 
 MANDATORY OPERATIONS LAYER BEFORE PUBLISHABLE RUNS:
 - install a live runtime workspace under $HOME/codex-caqf using scripts/install_ops.sh or an improved equivalent;
-- create/start an HTML progress dashboard and expose its URL/address to the operator;
+- create/start an HTML progress dashboard and expose its exact URL/address to the operator;
+- persist the exact dashboard URL in $HOME/codex-caqf/state/dashboard_url.txt and print `CAQF_DASHBOARD_URL=<url>` visibly in this terminal before proceeding beyond operations validation;
 - the dashboard MUST visibly show watchdog health as well as campaign/RAN/telemetry/Drive health;
 - create/start an independent watchdog that detects controller death/stall and engineering/instrumentation failures;
 - implement bounded automatic Codex recovery for engineering faults, preserving all failed runs and scientific invariants;
@@ -37,4 +38,4 @@ Use Linux/tmux/shell supervision for long waits so Codex is not consumed while r
 
 Never expose or commit private UE subscriber credentials, rclone OAuth configuration, passwords, tokens, private keys, or unsanitized sensitive logs.
 
-When all gates are satisfied, run the campaign autonomously, QC incrementally, package final results, upload the final Drive package and FINAL_READY marker, and leave a concise completion report with exact result/package locations.
+When all gates are satisfied, run the campaign autonomously, QC incrementally, package final results, upload the final Drive package and FINAL_READY marker, and leave a concise completion report with exact result/package locations and the dashboard URL.
