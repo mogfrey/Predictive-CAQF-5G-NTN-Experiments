@@ -1,0 +1,1 @@
+run_id,condition_id,block,constellation,pass_id,pass_band,satellite_id,repetition,status,replacement_for,start_utc,end_utc,framework_commit,oai_commit,config_hash,tle_hash,trace_hash,offered_rate_mbps,notes

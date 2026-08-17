@@ -1,0 +1,10 @@
+Fresh Codex CLI session:
+
+1. Read docs/CODEX_BOOTSTRAP_PROMPT.txt.
+2. Follow it exactly.
+3. Before any lab edit, read the four authoritative documents it names completely.
+4. Do not start publishable runs until all engineering/freeze gates pass.
+5. Preserve the prior completed TLE-driven study and work from a separate CA-QF OAI checkout.
+
+Canonical repository:
+https://github.com/mogfrey/Predictive-CAQF-5G-NTN-Experiments
