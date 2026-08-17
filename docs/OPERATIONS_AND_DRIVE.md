@@ -40,6 +40,19 @@ The dashboard must show at minimum:
 
 The dashboard is observational only. It must not alter experiment state.
 
+### Dashboard URL discovery and persistence
+
+The operator must not have to discover the dashboard address manually. When the dashboard is first validated, Codex must:
+
+1. choose a host/port that is reachable from the operator's normal management network without changing firewall/security policy unless necessary;
+2. determine the appropriate RAN-host address and exact dashboard URL;
+3. write the exact URL as a single line to `$HOME/codex-caqf/state/dashboard_url.txt`;
+4. print a highly visible terminal line exactly in the form `CAQF_DASHBOARD_URL=<url>` before proceeding to the next major phase;
+5. keep `dashboard_url.txt` current if the address or port changes;
+6. include the URL in `$HOME/codex-caqf/state/dashboard_snapshot.json` and the final completion report.
+
+Do not publish host addresses or other private infrastructure details to the public GitHub repository.
+
 ## Watchdog requirements
 
 The watchdog must be independent from the campaign controller so a dead controller cannot report itself healthy. It writes `$HOME/codex-caqf/state/watchdog_health.json` on every cycle.
@@ -128,6 +141,7 @@ Drive/reporting failure does not invalidate an otherwise valid scientific run. P
 No publishable campaign may begin until Codex has demonstrated:
 
 - dashboard is live and correctly reports watchdog health;
+- `$HOME/codex-caqf/state/dashboard_url.txt` exists and the URL has been printed to the operator;
 - watchdog independently detects a deliberately stopped test controller;
 - watchdog bounded-recovery logic is tested with a harmless synthetic fault;
 - Drive upload/read-back test passes;
